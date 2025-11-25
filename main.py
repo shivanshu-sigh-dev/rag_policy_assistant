@@ -16,23 +16,24 @@ Date: November 25, 2025
 """
 
 ###############################################################################
-# 1. IMPORTS
+# 1. Global Imports and Configuration
 ###############################################################################
-import os
+import chromadb
 import fitz  # PyMuPDF for PDF processing
+import httpx
+import json
+import os
 import re
 import ssl
-import httpx
 import tiktoken  # Token counting for OpenAI models
-import json
-import chromadb
-import uuid
 import time
-from typing import List, Dict, Any, Tuple, Generator
-from sentence_transformers import CrossEncoder
+import uuid
+
 from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 from dotenv import load_dotenv
 from openai import OpenAI
+from sentence_transformers import CrossEncoder
+from typing import List, Dict, Any, Tuple, Generator
 
 # Load environment variables from .env file
 load_dotenv()
@@ -51,7 +52,6 @@ openai_client = OpenAI(
 ###############################################################################
 # 2. EMBEDDING LAYER (EXTRACTION + CLEANING + CHUNKING + EMBEDDING)
 ###############################################################################
-
 # Initialize OpenAI embedding function for vector generation
 embedding_fn = OpenAIEmbeddingFunction(
     model_name="text-embedding-3-large",
@@ -250,7 +250,6 @@ def embed_text(texts: List[str], batch_size: int = 50, max_context_tokens: int =
 ###############################################################################
 # 3. SEMANTIC QUERY CACHE WITH CHROMADB
 ###############################################################################
-
 # Configuration constants
 QUERY_CACHE_TTL_SECONDS = 3600  # 1 hour cache lifetime
 SEMANTIC_SIMILARITY_THRESHOLD = 0.88  # Threshold for semantic similarity matching
@@ -384,7 +383,6 @@ class QueryCache:
 ###############################################################################
 # 4. CROSS-ENCODER RE-RANKING
 ###############################################################################
-
 def rerank_results(query: str, documents: List[str], top_k: int = 10) -> List[Tuple[str, float]]:
     """
     Re-rank documents using a cross-encoder model for improved relevance.
@@ -425,7 +423,6 @@ def rerank_results(query: str, documents: List[str], top_k: int = 10) -> List[Tu
 ###############################################################################
 # 5. RAG (RETRIEVAL-AUGMENTED GENERATION) WORKFLOW
 ###############################################################################
-
 def build_rag_prompt(query: str, context_chunks: List[str], max_context_length: int = 3000) -> str:
     """
     Build a prompt for RAG by combining user query with retrieved context.
@@ -600,7 +597,6 @@ def stream_rag_response(query: str, context_chunks: List[str], model: str = "gpt
 ###############################################################################
 # 6. MAIN EXECUTION
 ###############################################################################
-
 if __name__ == "__main__":
     """
     Main execution flow for the RAG system.
@@ -643,8 +639,10 @@ if __name__ == "__main__":
     # OPTIONAL: Document indexing (run once or when documents change)
     # =========================================================================
     if "--perform-embedding" in os.sys.argv:
+        print("✓ Starting document embedding process...")
+        PDF_FOLDER_NAME = "pdfs"
         PDF_FILE_NAME = "Principal-Sample-Life-Insurance-Policy.pdf"
-        PDF_DOCUMENT_PATH = os.path.join(os.getcwd(), "pdfs", PDF_FILE_NAME)
+        PDF_DOCUMENT_PATH = os.path.join(os.getcwd(), PDF_FOLDER_NAME, PDF_FILE_NAME)
         print(f"✓ Document: {PDF_DOCUMENT_PATH}")
 
         raw_pdf_text = extract_pdf_text(PDF_DOCUMENT_PATH)

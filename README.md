@@ -1,31 +1,12 @@
-# RAG-Based Insurance Policy Assistant - Project Report
-
-**Project Title:** Intelligent Insurance Policy Assistant using Retrieval-Augmented Generation  
+# Mr.HelpMate AI - Project Report
 **Author:** Shivanshu Kumar Singh  
-**Date:** November 25, 2025  
-**Institution:** Masters Program  
-
----
-
-## Table of Contents
-
-1. [Executive Summary](#executive-summary)
-2. [Project Objectives](#project-objectives)
-3. [System Architecture](#system-architecture)
-4. [Design Decisions](#design-decisions)
-5. [Implementation Details](#implementation-details)
-6. [Technical Challenges & Solutions](#technical-challenges--solutions)
-7. [Performance Evaluation](#performance-evaluation)
-8. [Lessons Learned](#lessons-learned)
-9. [Future Enhancements](#future-enhancements)
-10. [Conclusion](#conclusion)
-11. [References](#references)
+**Date:** November 25, 2025
 
 ---
 
 ## 1. Executive Summary
 
-This project implements a production-ready Retrieval-Augmented Generation (RAG) system designed to answer questions about insurance policy documents. The system combines state-of-the-art natural language processing techniques including:
+This project implements a Retrieval-Augmented Generation (RAG) system designed to answer questions about insurance policy documents. The system combines state-of-the-art natural language processing techniques including:
 
 - **Semantic text chunking** for optimal document segmentation
 - **Vector embeddings** using OpenAI's text-embedding-3-large (3072 dimensions)
@@ -75,11 +56,11 @@ The system achieves **100% Hit@5 accuracy** on test queries while maintaining ef
                                  │
                                  ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      QUERY PROCESSING LAYER                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   Embedding  │  │ Semantic     │  │  Cache       │          │
-│  │   Generation │→ │ Cache Lookup │→ │  Hit/Miss    │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│                      QUERY PROCESSING LAYER                     │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
+│  │   Embedding  │  │ Semantic     │  │  Cache       │           │
+│  │   Generation │→ │ Cache Lookup │→ │  Hit/Miss    │           │
+│  └──────────────┘  └──────────────┘  └──────────────┘           │
 └─────────────────────────────────────────────────────────────────┘
                                  │
                     ┌────────────┴────────────┐
@@ -92,7 +73,7 @@ The system achieves **100% Hit@5 accuracy** on test queries while maintaining ef
 │  │  • Cosine Similarity           │ │
 │  │  • Top-20 Candidates           │ │
 │  └────────────────────────────────┘ │
-│               ▼                      │
+│               ▼                     │
 │  ┌────────────────────────────────┐ │
 │  │  Cross-Encoder Re-ranking      │ │
 │  │  • ms-marco-electra-base       │ │
@@ -102,26 +83,26 @@ The system achieves **100% Hit@5 accuracy** on test queries while maintaining ef
                     │
                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    GENERATION LAYER                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │ Prompt       │→ │ OpenAI GPT   │→ │ Stream/      │          │
-│  │ Construction │  │ (gpt-4o-mini)│  │ Return       │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│                    GENERATION LAYER                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
+│  │ Prompt       │→ │ OpenAI GPT   │→ │ Stream/      │           │
+│  │ Construction │  │ (gpt-4o-mini)│  │ Return       │           │
+│  └──────────────┘  └──────────────┘  └──────────────┘           │
 └─────────────────────────────────────────────────────────────────┘
                                  │
                                  ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                     DOCUMENT PROCESSING LAYER                    │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │ PDF          │→ │ Text         │→ │ Semantic     │          │
-│  │ Extraction   │  │ Cleaning     │  │ Chunking     │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-│                          ▼                                       │
+│                     DOCUMENT PROCESSING LAYER                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
+│  │ PDF          │→ │ Text         │→ │ Semantic     │           │
+│  │ Extraction   │  │ Cleaning     │  │ Chunking     │           │
+│  └──────────────┘  └──────────────┘  └──────────────┘           │
+│                          ▼                                      │
 │                  ┌──────────────┐                               │
 │                  │  Embedding   │                               │
 │                  │  Generation  │                               │
 │                  └──────────────┘                               │
-│                          ▼                                       │
+│                          ▼                                      │
 │                  ┌──────────────┐                               │
 │                  │  ChromaDB    │                               │
 │                  │  Storage     │                               │
@@ -597,8 +578,6 @@ class QueryCache:
 
 ### 7.1 Chunking Strategy Comparison
 
-Based on `embedding_evaluation.md`:
-
 | Strategy | Chunks | Hit@1 | Hit@5 | MRR | nDCG | Cost Efficiency |
 |----------|--------|-------|-------|-----|------|-----------------|
 | **Semantic** | **67** | **100%** | **100%** | **1.0** | **0.98** | **⭐⭐⭐⭐⭐** |
@@ -699,8 +678,6 @@ Improvement: 31% faster
 - **Savings: $0.15/month (83%)**
 
 ### 7.5 Retrieval Accuracy Metrics
-
-**Test Set:** 8 queries from `embedding_evaluation.md`
 
 **Results:**
 ```
@@ -958,177 +935,9 @@ Total Cost = API Cost + Development Time + Maintenance + Opportunity Cost
 
 ---
 
-## 9. Future Enhancements
+## 9. Conclusion
 
-### 9.1 Short-Term Improvements (Next 3 Months)
-
-#### 9.1.1 Multi-Document Support
-**Current:** Single PDF document  
-**Target:** Multiple policy documents with metadata filtering
-
-**Implementation Plan:**
-```python
-# Add document metadata to chunks
-chroma_db_collection.add(
-    documents=chunks,
-    metadatas=[{"doc_id": doc_id, "doc_name": filename}],
-    ids=chunk_ids
-)
-
-# Filter by document during query
-results = collection.query(
-    query_embeddings=[query_embedding],
-    where={"doc_id": selected_doc_id},
-    n_results=10
-)
-```
-
-**Benefit:** Support enterprise with multiple policy types
-
-#### 9.1.2 Query Classification
-**Current:** All queries use same retrieval strategy  
-**Target:** Route queries based on intent
-
-**Categories:**
-- Factual (date, name, amount) → Dense retrieval
-- Explanatory (what is, how to) → Semantic retrieval
-- Comparative (difference between) → Multi-hop retrieval
-
-**Implementation:**
-```python
-intent = classify_intent(query)  # Using zero-shot classifier
-if intent == "factual":
-    results = dense_retrieval(query, k=5)
-elif intent == "explanatory":
-    results = semantic_retrieval(query, k=10)
-```
-
-**Expected Impact:** 5-10% accuracy improvement
-
-#### 9.1.3 User Feedback Loop
-**Current:** No feedback mechanism  
-**Target:** Thumbs up/down with reason
-
-**Schema:**
-```python
-feedback = {
-    "query": str,
-    "response": str,
-    "rating": int,  # 1-5
-    "issue": str,   # "irrelevant", "incomplete", "incorrect"
-    "timestamp": float
-}
-```
-
-**Use Cases:**
-- Identify problematic queries
-- Fine-tune retrieval thresholds
-- Generate training data for fine-tuning
-
-### 9.2 Medium-Term Enhancements (3-6 Months)
-
-#### 9.2.1 Conversation History
-**Current:** Stateless (no context between queries)  
-**Target:** Multi-turn conversations
-
-**Implementation:**
-```python
-conversation_history = [
-    {"role": "user", "content": "What is premium?"},
-    {"role": "assistant", "content": "Premium is..."},
-    {"role": "user", "content": "How do I pay it?"}  # Contextual
-]
-```
-
-**Benefit:** More natural user experience
-
-#### 9.2.2 Table and Image Understanding
-**Current:** Text-only extraction  
-**Target:** Parse tables, extract from images
-
-**Tools:**
-- Tables: Camelot, pdfplumber
-- Images: GPT-4V, Tesseract OCR
-- Layout: LayoutLM
-
-**Challenge:** Maintaining semantic coherence across modalities
-
-#### 9.2.3 Hybrid Search
-**Current:** Vector search only  
-**Target:** Vector + keyword search fusion
-
-**Approach:**
-```python
-vector_results = vector_search(query, k=20)
-keyword_results = bm25_search(query, k=20)
-final_results = reciprocal_rank_fusion(vector_results, keyword_results)
-```
-
-**Benefit:** Better recall for specific terms (policy numbers, dates)
-
-### 9.3 Long-Term Vision (6-12 Months)
-
-#### 9.3.1 Fine-Tuned Embeddings
-**Current:** Generic OpenAI embeddings  
-**Target:** Domain-specific embeddings
-
-**Approach:**
-- Collect query-document relevance labels
-- Fine-tune OpenAI text-embedding-3-large
-- A/B test against base model
-
-**Expected Improvement:** 10-15% accuracy gain
-
-#### 9.3.2 Multi-Modal RAG
-**Current:** Text-only  
-**Target:** Text + Tables + Images + Charts
-
-**Architecture:**
-```
-Query → Intent Detection
-  ├─ Text query → Text retrieval
-  ├─ Table query → Table retrieval (structure-aware)
-  ├─ Chart query → Image retrieval + VQA
-  └─ Fusion → Unified response
-```
-
-#### 9.3.3 Agentic RAG
-**Current:** Single-shot retrieval  
-**Target:** Multi-step reasoning with tool use
-
-**Capabilities:**
-- Decompose complex queries
-- Multiple retrieval steps
-- Compare across sections
-- Perform calculations (premium comparisons)
-
-**Example:**
-```
-Query: "Which policy is cheaper for a 35-year-old?"
-Agent Steps:
-1. Extract policies from database
-2. Retrieve premium calculation rules
-3. Calculate premium for each policy
-4. Compare and explain differences
-```
-
-#### 9.3.4 Production Infrastructure
-**Current:** Local ChromaDB, synchronous API  
-**Target:** Distributed, async, monitored
-
-**Components:**
-- **Database:** ChromaDB → Pinecone/Weaviate (managed)
-- **API:** Synchronous → FastAPI async
-- **Caching:** Local → Redis distributed cache
-- **Monitoring:** Print statements → Prometheus + Grafana
-- **Logging:** Unstructured → ELK stack
-- **Deployment:** Local → Docker + Kubernetes
-
----
-
-## 10. Conclusion
-
-### 10.1 Project Success Summary
+### 9.1 Project Success Summary
 
 This project successfully developed a production-ready RAG system for insurance policy querying with the following achievements:
 
@@ -1148,7 +957,7 @@ This project successfully developed a production-ready RAG system for insurance 
 | Cache Hit Rate | >60% | 85% | ✓ Exceeded |
 | Cost per Query | <$0.001 | $0.00003 (avg) | ✓ Exceeded |
 
-### 10.2 Technical Contributions
+### 9.2 Technical Contributions
 
 1. **Semantic Query Caching:** Novel use of ChromaDB for vector-based query caching (85% hit rate vs 20% with string matching)
 
@@ -1158,42 +967,7 @@ This project successfully developed a production-ready RAG system for insurance 
 
 4. **Production-Ready Architecture:** Complete system with error handling, streaming, monitoring, and comprehensive documentation
 
-### 10.3 Business Impact
-
-**For Insurance Companies:**
-- ✅ Reduced customer service workload (automated FAQ answering)
-- ✅ Improved customer satisfaction (instant, accurate answers)
-- ✅ Lower operational costs ($0.03 per 1000 queries with caching)
-- ✅ 24/7 availability (no human agent required)
-
-**For Policy Holders:**
-- ✅ Instant answers to policy questions
-- ✅ Citations to specific policy sections
-- ✅ Natural language interface (no need to read 100-page policies)
-- ✅ Consistent, accurate information
-
-### 10.4 Academic Insights
-
-**Research Questions Answered:**
-
-1. **Q:** Does semantic chunking outperform fixed-size for structured documents?  
-   **A:** Yes—24% fewer chunks with equal or better accuracy (100% Hit@1)
-
-2. **Q:** Can vector similarity replace exact string matching for query caching?  
-   **A:** Yes—85% hit rate vs 20%, with threshold=0.88 optimal for paraphrases
-
-3. **Q:** Is cross-encoder re-ranking worth the latency cost?  
-   **A:** Yes—for accuracy-critical applications, 500ms overhead yields 100% accuracy vs 87.5%
-
-4. **Q:** What's the optimal balance between chunk size and retrieval quality?  
-   **A:** 450-500 tokens maintains semantic coherence while fitting context windows
-
-**Novel Findings:**
-- ChromaDB-based semantic caching scales better than JSON/Redis for small-medium workloads
-- Two-stage retrieval (bi-encoder + cross-encoder) achieves 100% accuracy without fine-tuning
-- Semantic chunking reduces embedding costs by 24% while improving accuracy
-
-### 10.5 Personal Growth
+### 9.3 Personal Growth
 
 **Technical Skills Developed:**
 - ✅ Vector databases (ChromaDB, HNSW indexing)
@@ -1208,7 +982,7 @@ This project successfully developed a production-ready RAG system for insurance 
 - ✅ Technical writing and documentation
 - ✅ Trade-off analysis (cost vs performance vs accuracy)
 
-### 10.6 Final Thoughts
+### 9.4 Final Thoughts
 
 This project demonstrates that **production-ready RAG systems are achievable** with:
 - Careful architecture design (two-stage retrieval)
@@ -1222,34 +996,6 @@ The system is **not just a proof-of-concept** but a **deployable solution** read
 - Research baseline for RAG improvements
 
 **Key Takeaway:** The combination of semantic chunking, vector similarity caching, cross-encoder re-ranking, and structured prompting creates a RAG system that is simultaneously **accurate** (100% Hit@1), **fast** (0.4s cached), and **cost-effective** ($0.03/1000 queries).
-
----
-
-## 11. References
-
-### Academic Papers
-1. Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." *NeurIPS 2020*.
-2. Karpukhin, V., et al. (2020). "Dense Passage Retrieval for Open-Domain Question Answering." *EMNLP 2020*.
-3. Nogueira, R., & Cho, K. (2019). "Passage Re-ranking with BERT." *arXiv:1901.04085*.
-
-### Technical Documentation
-4. OpenAI. (2024). "OpenAI Embeddings Documentation." https://platform.openai.com/docs/guides/embeddings
-5. ChromaDB. (2024). "ChromaDB Documentation." https://docs.trychroma.com/
-6. Hugging Face. (2024). "Sentence Transformers Documentation." https://www.sbert.net/
-
-### Libraries & Tools
-7. PyMuPDF (fitz) - https://pymupdf.readthedocs.io/
-8. tiktoken - https://github.com/openai/tiktoken
-9. sentence-transformers - https://github.com/UKPLab/sentence-transformers
-10. OpenAI Python SDK - https://github.com/openai/openai-python
-
-### Datasets
-11. MS MARCO Passage Ranking Dataset - https://microsoft.github.io/msmarco/
-12. BEIR Benchmark - https://github.com/beir-cellar/beir
-
-### Blog Posts & Tutorials
-13. Pinecone. (2023). "Two-Stage Retrieval for RAG." https://www.pinecone.io/learn/rag/
-14. LangChain. (2024). "Text Splitting Strategies." https://python.langchain.com/docs/modules/data_connection/document_transformers/
 
 ---
 
@@ -1282,7 +1028,7 @@ python-dotenv>=1.0.0
 ```bash
 # 1. Clone repository
 git clone <repository-url>
-cd MrHelpMateAI
+cd rag_policy_assistant
 
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -1319,73 +1065,3 @@ OPENAI_API_BASE=<url>           # Optional (for proxies)
 QUERY_CACHE_TTL=3600            # Cache lifetime (seconds)
 SIMILARITY_THRESHOLD=0.88       # Semantic cache threshold
 ```
-
-### Appendix D: Troubleshooting
-
-**Common Issues:**
-
-1. **SSL Certificate Error**
-   ```
-   Solution: Set SSL_CERT_FILE environment variable or disable verification
-   ```
-
-2. **Dimension Mismatch Error**
-   ```
-   Solution: Ensure embedding_function is passed to collection
-   ```
-
-3. **Token Limit Exceeded**
-   ```
-   Solution: Reduce max_tokens in chunking or embedding functions
-   ```
-
-4. **Low Cache Hit Rate**
-   ```
-   Solution: Lower SIMILARITY_THRESHOLD to 0.85-0.88
-   ```
-
-### Appendix E: Project Timeline
-
-```
-Week 1-2: Research & Planning
-  ├─ Literature review on RAG systems
-  ├─ Technology selection
-  └─ Architecture design
-
-Week 3-4: Core Implementation
-  ├─ PDF extraction & chunking
-  ├─ Embedding generation
-  ├─ Vector database setup
-  └─ Basic retrieval
-
-Week 5-6: Optimization
-  ├─ Semantic chunking implementation
-  ├─ Cross-encoder re-ranking
-  └─ Performance tuning
-
-Week 7-8: Caching & Evaluation
-  ├─ Semantic cache implementation
-  ├─ Chunking strategy evaluation
-  └─ Metric collection
-
-Week 9-10: RAG Integration
-  ├─ GPT integration
-  ├─ Prompt engineering
-  └─ Streaming support
-
-Week 11-12: Production Readiness
-  ├─ Error handling
-  ├─ Documentation
-  ├─ Testing
-  └─ Report writing
-```
-
----
-
-**Document Version:** 1.0  
-**Last Updated:** November 25, 2025  
-**Status:** Complete  
-
----
-
-*This report documents the complete development journey of a production-ready RAG system, from initial concept through implementation, evaluation, and lessons learned. All code, metrics, and insights are based on actual development experience and real-world testing.*
