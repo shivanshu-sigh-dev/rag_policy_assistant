@@ -719,7 +719,7 @@ if __name__ == "__main__":
         print("\n" + "="*80)
         print("RETRIEVED CHUNKS")
         print("="*80)
-        for i, chunk in enumerate(documents[:5], 1):  # Show top 5
+        for i, chunk in enumerate(documents[:3], 1):  # Show top 3 chunks
             print(f"\n[Chunk {i}]")
             print(chunk)
             print("-" * 80)
