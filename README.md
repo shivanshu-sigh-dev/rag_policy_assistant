@@ -1093,7 +1093,7 @@ python-dotenv>=1.0.0
 
 ```bash
 # 1. Clone repository
-git clone <repository-url>
+git clone https://github.com/shivanshu-sigh-dev/rag_policy_assistant.git
 cd rag_policy_assistant
 
 # 2. Install dependencies
